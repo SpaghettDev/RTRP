@@ -2,6 +2,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <array>
 
 #include "../fwddec.hpp"
 
@@ -28,7 +29,7 @@ namespace rtrp
 		int unk17;
 		int gameVersion;
 		int unk19;
-		int likes;
+		int featuredIdx;
 		int unk21;
 		bool isDemon; // empty when false, 1 when true
 		int unk23;
@@ -38,9 +39,9 @@ namespace rtrp
 		int unk27;
 		int stars;
 		int unk29;
-		int featured;
+		int unk30;
 		int unk31;
-		bool isEpic;
+		int unkEpic;
 		int unk33;
 		int objectCount;
 		int unk35;
@@ -63,6 +64,32 @@ namespace rtrp
 		int unk52;
 		int unk53;
 		int customSongID; // 0 (not empty cuz rob!) when it isn't a custom song
+
+		struct HelperFields
+		{
+			// bool ldm;
+			bool featured;
+			bool epic;
+			bool platformer;
+			int orbs;
+			std::string length;
+
+		private:
+			inline static std::array<int, 11> orbsArray = { 0, 0, 50, 75, 125, 175, 225, 275, 350, 425, 500 };
+			inline static std::array<std::string, 6> lengthArray = { "Tiny", "Short", "Medium", "Long", "XL", "Platformer" };
+			friend class LevelObject;
+
+			static const HelperFields from_vector(const std::vector<std::string>& vec)
+			{
+				return {
+					vec[19] != "0",
+					vec[31] != "0",
+					vec[37] == "5",
+					orbsArray[std::stoi(vec[27])],
+					lengthArray[std::stoi(vec[37])]
+				};
+			}
+		} helperFields;
 
 	private:
 		static constexpr std::string_view DELIMITER = ":";
@@ -127,6 +154,7 @@ namespace rtrp
 				std::stoi(vec[51]),
 				std::stoi(vec[52]),
 				std::stoi(vec[53]),
+				HelperFields::from_vector(vec)
 			};
 		}
 	};

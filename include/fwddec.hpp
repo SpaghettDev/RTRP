@@ -4,26 +4,9 @@
 
 namespace rtrp
 {
-	class RtResponseParser;
-
 	namespace utils
 	{
 		inline std::vector<std::string> split(const std::string&, std::string_view);
-
-		template<typename T>
-		struct Result
-		{
-			T result;
-			bool isError;
-
-			Result(const T& result, bool isError = false)
-				: result(result), isError(isError)
-			{}
-
-			Result(bool isError)
-				: isError(isError)
-			{}
-		};
 	}
 
 	namespace objects
@@ -40,6 +23,9 @@ namespace rtrp
 		struct LevelResponse;
 		struct ListResponse;
 	}
+
+	template<typename T>
+	struct Result;
 
 	class RtResponseParser;
 }
