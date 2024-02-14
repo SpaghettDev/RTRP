@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(RTRP LANGUAGES CXX VERSION 1.5.0)
+project(RTRP LANGUAGES CXX VERSION 1.6.0)
 
 set(NAMESPACE_NAME "rtrp")
 
@@ -12,9 +12,9 @@ file(GLOB SOURCES
 )
 
 file(GLOB INCLUDE_HEADERS
-    include/types/*.hpp
-    include/objects/*.hpp
-    include/*.hpp
+    include/rtrp/types/*.hpp
+    include/rtrp/objects/*.hpp
+    include/rtrp/*.hpp
 )
 
 add_library(${PROJECT_NAME} SHARED STATIC ${SOURCES})
