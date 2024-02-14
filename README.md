@@ -17,21 +17,15 @@ More will be added later.
 
 ## How To Include
 
-git.cmake:
+CMakeLists.txt:
 
 ```cmake
+# ...
+
+include(FetchContent)
 find_package(Git)
 
-if(Git_FOUND)
-    message("Git found: ${GIT_EXECUTABLE}")
-endif()
-```
-
-rtrp.cmake:
-
-```cmake
-include(FetchContent)
-
+message("Getting modules\n")
 FetchContent_Declare(
     RTRP
     GIT_REPOSITORY https://github.com/SpaghettDev/RTRP.git
@@ -40,17 +34,6 @@ FetchContent_Declare(
 )
 message("Fetching RTRP")
 FetchContent_MakeAvailable(RTRP)
-```
-
-CMakeLists.txt:
-
-```cmake
-# ...
-
-include(cmake/git.cmake)
-
-message("Getting modules\n")
-include(cmake/rtrp.cmake)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${RTRP_SOURCE_DIR}/include)
 
