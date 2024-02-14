@@ -26,7 +26,7 @@ namespace rtrp
 		int editTimestamp;
 
 	private:
-		inline static constexpr std::string_view DELIMITER = "#";
+		inline static constexpr std::string_view DELIMITER = ":";
 		inline static constexpr std::string_view DELIMITER_SEARCH = "|";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 30;
 		friend class RtResponseParser;
