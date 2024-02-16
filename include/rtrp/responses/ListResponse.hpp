@@ -23,6 +23,8 @@ namespace rtrp
 			: lists(lists), creators(creators), page(page), hash(hash)
 		{}
 
+		ListResponse() = default;
+
 	private:
 		inline static constexpr std::string_view DELIMITER = "#";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 4;

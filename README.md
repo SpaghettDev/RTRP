@@ -46,3 +46,28 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${RTRP_SOURCE_DIR}/include)
 
 target_link_libraries(${PROJECT_NAME} RTRP)
 ```
+
+## Example
+
+```cpp
+#include <rtrp/rtrp.hpp>
+
+// get the server's response as a std::string using some kind of web library. (e.g.: curl)
+std::string serverLevelResponse = getFromUrl("https://www.boomlings.com/database/getGJLevelLists.php");
+
+/**
+ * Now, we parse the result using the correct RtResponseParser method.
+ * Notice the `.unwrap()` in the end!
+ * If you `.unwrap()` a parsed result that is wrong, an std::runtime_error will be raised.
+ */
+const auto& parsedResponse = RtResponseParser::parseListResponse(serverLevelResponse).unwrap();
+
+// Now we can access conveniently named members directly instead of relying on some random index robert chose!
+int listID = parsedResponse.lists[0].listID;
+std::string creatorName = parsedResponse.lists[0].creatorName;
+// ...
+
+// Looping through the fetched lists
+for (const auto& list : parsedResponse.lists)
+    std::cout << list.name << " has ID: " << list.listID << '\n';
+```

@@ -17,7 +17,7 @@ namespace rtrp
 		int editTimestamp;
 		int creatorAccountID;
 		std::string creatorName;
-		impl::v_response_t levelIDs;
+		std::vector<std::string> levelIDs;
 		int diamonds;
 		int firstDiamondsGoal;
 

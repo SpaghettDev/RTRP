@@ -85,7 +85,7 @@ namespace rtrp
 		int moons;
 		int unk53;
 		int unk54;
-		impl::v_response_t unk55;
+		std::vector<std::string> unk55;
 
 	private:
 		inline static constexpr std::string_view DELIMITER = ":";

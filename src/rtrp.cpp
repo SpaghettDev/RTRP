@@ -1,16 +1,19 @@
 #include "rtrp/rtrp.hpp"
 #include "utils.hpp"
 
-// doesn't assert size cuz making that work is making me fucking insane (cannot construct an empty LevelResponse without making the constructor, boy oh boy will the constructor be constructing with 5 billion members)
-#define SPLIT_AND_ASSERT_SIZE(var, resp, type) \
-	utils::splitString(resp, type::DELIMITER); // \
-	// if (var.size() != type::SPLIT_RESPONSE_SIZE) return {}
+#define SPLIT_AND_ASSERT_SIZE1(var, resp, type) \
+	utils::splitString(resp, type::DELIMITER); \
+	if (var.size() != type::SPLIT_RESPONSE_SIZE) return { true }
+
+#define SPLIT_AND_ASSERT_SIZE2(var, resp, type) \
+	utils::splitString(resp, type::DELIMITER); \
+	if (var.size() != type::SPLIT_RESPONSE_SIZE || var.size() != type::SPLIT_RESPONSE_SIZE2) return { true }
 
 namespace rtrp
 {
-	responses::LevelResponse RtResponseParser::parseLevelResponse(const std::string& resp)
+	impl::Result<responses::LevelResponse> RtResponseParser::parseLevelResponse(const std::string& resp)
 	{
-		auto splitResponse = SPLIT_AND_ASSERT_SIZE(splitResponse, resp, responses::ListResponse);
+		auto splitResponse = SPLIT_AND_ASSERT_SIZE2(splitResponse, resp, responses::LevelResponse);
 
 		std::vector<objects::LevelObject> levelObjects;
 		auto levelObjectsStrings = utils::splitString(splitResponse[0], objects::LevelObject::DELIMITER_SEARCH);
@@ -30,12 +33,12 @@ namespace rtrp
 		auto pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[3], objects::PageObject::DELIMITER));
 		auto hash = splitResponse[4];
 
-		return { levelObjects, creatorObjects, songObjects, pageObject, hash };
+		return { { levelObjects, creatorObjects, songObjects, pageObject, hash } };
 	}
 
-	responses::ListResponse RtResponseParser::parseListResponse(const std::string& resp)
+	impl::Result<responses::ListResponse> RtResponseParser::parseListResponse(const std::string& resp)
 	{
-		auto splitResponse = SPLIT_AND_ASSERT_SIZE(splitResponse, resp, responses::ListResponse);
+		auto splitResponse = SPLIT_AND_ASSERT_SIZE1(splitResponse, resp, responses::ListResponse);
 
 		std::vector<objects::ListObject> listObjects;
 		auto listObjectsStrings = utils::splitString(splitResponse[0], objects::ListObject::DELIMITER_SEARCH);
@@ -50,12 +53,12 @@ namespace rtrp
 		auto pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[2], objects::PageObject::DELIMITER));
 		auto hash = splitResponse[3];
 
-		return { listObjects, creatorObjects, pageObject, hash };
+		return { { listObjects, creatorObjects, pageObject, hash } };
 	}
 
-	responses::UserResponse RtResponseParser::parseUserResponse(const std::string& resp)
+	impl::Result<responses::UserResponse> RtResponseParser::parseUserResponse(const std::string& resp)
 	{
-		auto splitResponse = SPLIT_AND_ASSERT_SIZE(splitKVP, resp, responses::UserResponse);
+		auto splitResponse = SPLIT_AND_ASSERT_SIZE2(splitResponse, resp, responses::UserResponse);
 
 		std::vector<objects::UserObject> userObjects;
 		auto userObjectsStrings = utils::splitString(splitResponse[0], objects::UserObject::DELIMITER_SEARCH);
@@ -68,6 +71,6 @@ namespace rtrp
 		if (splitResponse.size() == 2)
 			pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[1], objects::PageObject::DELIMITER));
 
-		return { userObjects, pageObject };
+		return { { userObjects, pageObject } };
 	}
 }

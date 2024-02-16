@@ -26,9 +26,12 @@ namespace rtrp
 			: levels(levels), creators(creators), songs(songs), page(page), hash(hash)
 		{}
 
+		LevelResponse() = default;
+
 	private:
 		inline static const std::string_view DELIMITER = "#";
-		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 5;
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 27; // getGJLevels21.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 33; // downloadGJLevel22.php
 		inline friend class RtResponseParser;
 	};
 }

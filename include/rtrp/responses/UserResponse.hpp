@@ -20,9 +20,12 @@ namespace rtrp
 			: users(users), page(page)
 		{}
 
+		UserResponse() = default;
+
 	private:
 		inline static constexpr std::string_view DELIMITER = "#";
-		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 4;
+		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 1; // getGJUserInfo20.php & getGJScores20.php
+		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 2; // getGJUsers20.php
 		friend class RtResponseParser;
 	};
 }

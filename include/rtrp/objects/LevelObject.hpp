@@ -8,7 +8,7 @@ namespace rtrp
 {
 	struct objects::LevelObject
 	{
-		int ID;
+		int levelID;
 		std::string name;
 		std::string description;
 		std::string levelString;
@@ -86,7 +86,7 @@ namespace rtrp
 		static const LevelObject from_map(const impl::kv_response_t& map)
 		{
 			return {
-				RTRP_VAR_FROM_MAP(1, ID),
+				RTRP_VAR_FROM_MAP(1, levelID),
 				RTRP_VAR_FROM_MAP(2, name),
 				RTRP_VAR_FROM_MAP(3, description),
 				RTRP_VAR_FROM_MAP(4, levelString),
