@@ -1,8 +1,4 @@
 #pragma once
-#include <string>
-#include <string_view>
-#include <vector>
-
 #include "../fwddec.hpp"
 
 namespace rtrp
@@ -15,9 +11,10 @@ namespace rtrp
 		std::string artistName;
 		float size; // e.g.: 2.47 (MB)
 		std::string videoID;
-		std::string link; // URI encoded
 		std::string youtubeChannelID; // the youtube channel ID
 		bool isVerified; // 1#9999 or 1
+		int songPriority;
+		std::string link; // URI encoded
 
 	private:
 		inline static constexpr std::string_view DELIMITER = "~|~";
@@ -25,18 +22,19 @@ namespace rtrp
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 18;
 		friend class RtResponseParser;
 
-		static const SongObject from_vector(const std::vector<std::string>& vec)
+		static const SongObject from_map(const impl::kv_response_t& map)
 		{
 			return {
-				std::stoi(vec[1]),
-				vec[3],
-				std::stoi(vec[5]),
-				vec[7],
-				std::stof(vec[9]),
-				vec[11],
-				vec[13],
-				vec[15],
-				vec[17] == "1"
+				RTRP_VAR_FROM_MAP(1, ID),
+				RTRP_VAR_FROM_MAP(2, name),
+				RTRP_VAR_FROM_MAP(3, artistID),
+				RTRP_VAR_FROM_MAP(4, artistName),
+				RTRP_VAR_FROM_MAP(5, size),
+				RTRP_VAR_FROM_MAP(6, videoID),
+				RTRP_VAR_FROM_MAP(7, youtubeChannelID),
+				RTRP_VAR_FROM_MAP(8, isVerified),
+				RTRP_VAR_FROM_MAP(9, songPriority),
+				RTRP_VAR_FROM_MAP(10, link)
 			};
 		}
 	};

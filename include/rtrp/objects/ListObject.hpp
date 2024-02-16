@@ -1,8 +1,4 @@
 #pragma once
-#include <string>
-#include <string_view>
-#include <vector>
-
 #include "../fwddec.hpp"
 
 namespace rtrp
@@ -13,17 +9,17 @@ namespace rtrp
 		std::string name;
 		std::string description; // base64 encoded
 		int version;
-		int creatorAccountID;
-		std::string creatorName;
-		int downloads;
 		int difficulty;
+		int downloads;
 		int likes;
 		int featuredIdx;
-		std::vector<std::string> levelIDs;
-		int diamonds;
-		int firstDiamondsGoal;
 		int uploadTimestamp;
 		int editTimestamp;
+		int creatorAccountID;
+		std::string creatorName;
+		impl::v_response_t levelIDs;
+		int diamonds;
+		int firstDiamondsGoal;
 
 	private:
 		inline static constexpr std::string_view DELIMITER = ":";
@@ -31,24 +27,24 @@ namespace rtrp
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 30;
 		friend class RtResponseParser;
 
-		static const ListObject from_vector(const std::vector<std::string>& vec)
+		static const ListObject from_map(const impl::kv_response_t& map)
 		{
 			return {
-				std::stoi(vec[1]),
-				vec[3],
-				vec[5],
-				std::stoi(vec[7]),
-				std::stoi(vec[9]),
-				vec[11],
-				std::stoi(vec[13]),
-				std::stoi(vec[15]),
-				std::stoi(vec[17]),
-				vec[19] == "" ? 0 : std::stoi(vec[19]),
-				utils::split(vec[21], ","),
-				std::stoi(vec[23]),
-				std::stoi(vec[25]),
-				std::stoi(vec[27]),
-				std::stoi(vec[29]),
+				RTRP_VAR_FROM_MAP(1, listID),
+				RTRP_VAR_FROM_MAP(2, name),
+				RTRP_VAR_FROM_MAP(3, description),
+				RTRP_VAR_FROM_MAP(5, version),
+				RTRP_VAR_FROM_MAP(7, difficulty),
+				RTRP_VAR_FROM_MAP(10, downloads),
+				RTRP_VAR_FROM_MAP(14, likes),
+				RTRP_VAR_FROM_MAP(19, featuredIdx),
+				RTRP_VAR_FROM_MAP(28, uploadTimestamp),
+				RTRP_VAR_FROM_MAP(29, editTimestamp),
+				RTRP_VAR_FROM_MAP(49, creatorAccountID),
+				RTRP_VAR_FROM_MAP(50, creatorName),
+				RTRP_VEC_VAR_FROM_MAP(51, levelIDs, ","),
+				RTRP_VAR_FROM_MAP(55, diamonds),
+				RTRP_VAR_FROM_MAP(56, firstDiamondsGoal),
 			};
 		}
 	};

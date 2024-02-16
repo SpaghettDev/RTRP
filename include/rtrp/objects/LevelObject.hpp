@@ -1,7 +1,4 @@
 #pragma once
-#include <string>
-#include <string_view>
-#include <vector>
 #include <array>
 
 #include "../fwddec.hpp"
@@ -13,35 +10,46 @@ namespace rtrp
 	{
 		int ID;
 		std::string name;
+		std::string description;
+		std::string levelString;
 		int version;
-		int creatorID;
+		int playerID;
 		int difficultyDenominator;
-		int difficultyNominator;
+		int difficultyNumerator;
 		int downloads;
+		int setCompletes;
 		int officialSong;
 		int gameVersion;
 		int likes;
+		int length;
+		int dislikes;
 		bool isDemon;
-		int demonDifficulty;
-		bool isAuto;
 		int stars;
 		int featureIdx;
-		bool isEpic;
-		int objects;
-		std::string description;
-		int length;
-		int originalID;
-		int isTwoPlayer;
+		bool isAuto;
+		std::string recordString;
+		std::string password;
+		std::string uploadDate;
+		std::string updateDate;
+		int copiedID;
+		bool twoPlayer;
+		int customSongID;
+		std::string extraString;
 		int coins;
 		bool verifiedCoins;
 		int starsRequested;
+		bool lowDetailMode;
+		int dailyNumber;
+		int epic;
+		int demonDifficulty;
+		bool isGauntlet;
+		int objects;
 		int editorTime;
 		int copiedEditorTime;
-		int customSongID;
+		std::string settingsString;
 
 		struct HelperFields
 		{
-			// bool ldm;
 			bool featured;
 			bool epic;
 			bool platformer;
@@ -57,14 +65,14 @@ namespace rtrp
 			};
 			friend class LevelObject;
 
-			static const HelperFields from_vector(const std::vector<std::string>& vec)
+			static const HelperFields from_map(const impl::kv_response_t& map)
 			{
 				return {
-					vec[19] != "0",
-					vec[31] != "0",
-					vec[37] == "5",
-					orbsArray[std::stoi(vec[27])],
-					lengthArray[std::stoi(vec[37])]
+					RTRP_VAR_FROM_MAP(19, LevelObject::featureIdx) != 0,
+					RTRP_VAR_FROM_MAP(42, LevelObject::epic) != 0,
+					RTRP_VAR_FROM_MAP(15, LevelObject::length) == 5,
+					orbsArray[RTRP_VAR_FROM_MAP(18, LevelObject::stars)],
+					lengthArray[RTRP_VAR_FROM_MAP(15, LevelObject::length)]
 				};
 			}
 		} helperFields;
@@ -75,37 +83,49 @@ namespace rtrp
 		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 54;
 		friend class RtResponseParser;
 
-		static const LevelObject from_vector(const std::vector<std::string>& vec)
+		static const LevelObject from_map(const impl::kv_response_t& map)
 		{
 			return {
-				std::stoi(vec[1]),
-				vec[3],
-				std::stoi(vec[5]),
-				std::stoi(vec[7]),
-				std::stoi(vec[9]),
-				std::stoi(vec[11]),
-				std::stoi(vec[13]),
-				std::stoi(vec[15]),
-				std::stoi(vec[17]),
-				std::stoi(vec[19]),
-				vec[21] == "1",
-				std::stoi(vec[23]),
-				vec[25] == "1",
-				std::stoi(vec[27]),
-				std::stoi(vec[29]),
-				vec[31] == "1",
-				std::stoi(vec[33]),
-				vec[35],
-				std::stoi(vec[37]),
-				std::stoi(vec[39]),
-				vec[41] == "1",
-				std::stoi(vec[43]),
-				vec[45] == "1",
-				std::stoi(vec[47]),
-				std::stoi(vec[49]),
-				std::stoi(vec[51]),
-				std::stoi(vec[53]),
-				HelperFields::from_vector(vec)
+				RTRP_VAR_FROM_MAP(1, ID),
+				RTRP_VAR_FROM_MAP(2, name),
+				RTRP_VAR_FROM_MAP(3, description),
+				RTRP_VAR_FROM_MAP(4, levelString),
+				RTRP_VAR_FROM_MAP(5, version),
+				RTRP_VAR_FROM_MAP(6, playerID),
+				RTRP_VAR_FROM_MAP(8, difficultyDenominator),
+				RTRP_VAR_FROM_MAP(9, difficultyNumerator),
+				RTRP_VAR_FROM_MAP(10, downloads),
+				RTRP_VAR_FROM_MAP(11, setCompletes),
+				RTRP_VAR_FROM_MAP(12, officialSong),
+				RTRP_VAR_FROM_MAP(13, gameVersion),
+				RTRP_VAR_FROM_MAP(14, likes),
+				RTRP_VAR_FROM_MAP(15, length),
+				RTRP_VAR_FROM_MAP(16, dislikes),
+				RTRP_VAR_FROM_MAP(17, isDemon),
+				RTRP_VAR_FROM_MAP(18, stars),
+				RTRP_VAR_FROM_MAP(19, featureIdx),
+				RTRP_VAR_FROM_MAP(25, isAuto),
+				RTRP_VAR_FROM_MAP(26, recordString),
+				RTRP_VAR_FROM_MAP(27, password),
+				RTRP_VAR_FROM_MAP(28, uploadDate),
+				RTRP_VAR_FROM_MAP(29, updateDate),
+				RTRP_VAR_FROM_MAP(30, copiedID),
+				RTRP_VAR_FROM_MAP(31, twoPlayer),
+				RTRP_VAR_FROM_MAP(35, customSongID),
+				RTRP_VAR_FROM_MAP(36, extraString),
+				RTRP_VAR_FROM_MAP(37, coins),
+				RTRP_VAR_FROM_MAP(38, verifiedCoins),
+				RTRP_VAR_FROM_MAP(39, starsRequested),
+				RTRP_VAR_FROM_MAP(40, lowDetailMode),
+				RTRP_VAR_FROM_MAP(41, dailyNumber),
+				RTRP_VAR_FROM_MAP(42, epic),
+				RTRP_VAR_FROM_MAP(43, demonDifficulty),
+				RTRP_VAR_FROM_MAP(44, isGauntlet),
+				RTRP_VAR_FROM_MAP(45, objects),
+				RTRP_VAR_FROM_MAP(46, editorTime),
+				RTRP_VAR_FROM_MAP(47, copiedEditorTime),
+				RTRP_VAR_FROM_MAP(48, settingsString),
+				HelperFields::from_map(map)
 			};
 		}
 	};

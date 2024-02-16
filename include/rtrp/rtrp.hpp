@@ -1,17 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
-
 #include "fwddec.hpp"
-
-#include "objects/LevelObject.hpp"
-#include "objects/ListObject.hpp"
-#include "objects/CreatorObject.hpp"
-#include "objects/SongObject.hpp"
-#include "objects/PageObject.hpp"
 
 #include "responses/LevelResponse.hpp"
 #include "responses/ListResponse.hpp"
+#include "responses/UserResponse.hpp"
 
 namespace rtrp
 {
@@ -20,5 +12,6 @@ namespace rtrp
 	public:
 		static responses::LevelResponse parseLevelResponse(const std::string&);
 		static responses::ListResponse parseListResponse(const std::string&);
+		inline responses::UserResponse parseUserResponse(const std::string&);
 	};
 }

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(RTRP LANGUAGES CXX VERSION 1.6.0)
+project(RTRP LANGUAGES CXX VERSION 2.0.0)
 
 set(NAMESPACE_NAME "rtrp")
 
@@ -12,6 +12,7 @@ file(GLOB SOURCES
 )
 
 file(GLOB INCLUDE_HEADERS
+    include/rtrp/impl/*.hpp
     include/rtrp/types/*.hpp
     include/rtrp/objects/*.hpp
     include/rtrp/*.hpp

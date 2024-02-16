@@ -5,7 +5,7 @@
 namespace rtrp
 {
 	template<typename T>
-	struct Result
+	struct impl::Result
 	{
 		T result;
 		bool isError;
