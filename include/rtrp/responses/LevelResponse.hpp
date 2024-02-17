@@ -30,8 +30,7 @@ namespace rtrp
 
 	private:
 		inline static const std::string_view DELIMITER = "#";
-		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 27; // getGJLevels21.php
-		static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 33; // downloadGJLevel22.php
-		inline friend class RtResponseParser;
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 5;
+		friend class RtResponseParser;
 	};
 }

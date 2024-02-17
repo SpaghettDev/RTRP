@@ -13,6 +13,7 @@ Currently only parses some endpoints. The functions that do so are:
   - getGJUserInfo20.php
   - getGJScores20.php
   - getGJUsers20.php
+  - getGJUserList20.php
 
 More will be added later.
 

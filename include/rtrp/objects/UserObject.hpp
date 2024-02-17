@@ -90,7 +90,10 @@ namespace rtrp
 	private:
 		inline static constexpr std::string_view DELIMITER = ":";
 		inline static constexpr std::string_view DELIMITER_SEARCH = "|";
-		inline static constexpr unsigned int MAX_SIZE = 55;
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 30; // getGJUserInfo20.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 15; // getGJScores20.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE3 = 14; // getGJUsers20.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE4 = 10; // getGJUserList20.php
 		friend class RtResponseParser;
 
 		static const UserObject from_map(const impl::kv_response_t& map)

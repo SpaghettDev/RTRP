@@ -3,30 +3,50 @@
 
 #define SPLIT_AND_ASSERT_SIZE1(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \
-	if (var.size() != type::SPLIT_RESPONSE_SIZE) return { true }
+	if (var.size() != type::SPLIT_RESPONSE_SIZE) return {}
 
 #define SPLIT_AND_ASSERT_SIZE2(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \
-	if (var.size() != type::SPLIT_RESPONSE_SIZE || var.size() != type::SPLIT_RESPONSE_SIZE2) return { true }
+	if ( \
+		var.size() != type::SPLIT_RESPONSE_SIZE || \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 \
+		) return {}
+
+#define SPLIT_AND_ASSERT_SIZE3(var, resp, type) \
+	utils::splitString(resp, type::DELIMITER); \
+	if ( \
+		var.size() != type::SPLIT_RESPONSE_SIZE || \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE3 \
+		) return {}
+
+#define SPLIT_AND_ASSERT_SIZE4(var, resp, type) \
+	utils::splitString(resp, type::DELIMITER); \
+	if ( \
+		var.size() != type::SPLIT_RESPONSE_SIZE || \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE3 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE4 \
+		) return {}
 
 namespace rtrp
 {
 	impl::Result<responses::LevelResponse> RtResponseParser::parseLevelResponse(const std::string& resp)
 	{
-		auto splitResponse = SPLIT_AND_ASSERT_SIZE2(splitResponse, resp, responses::LevelResponse);
+		auto splitResponse = SPLIT_AND_ASSERT_SIZE1(splitResponse, resp, responses::LevelResponse);
 
 		std::vector<objects::LevelObject> levelObjects;
-		auto levelObjectsStrings = utils::splitString(splitResponse[0], objects::LevelObject::DELIMITER_SEARCH);
+		auto levelObjectsStrings = SPLIT_AND_ASSERT_SIZE2(levelObjectsStrings, splitResponse[0], objects::LevelObject);
 		for (const auto& levelObjectString : levelObjectsStrings)
 			levelObjects.emplace_back(objects::LevelObject::from_map(utils::splitKVP(levelObjectString, objects::LevelObject::DELIMITER)));
 
 		std::vector<objects::CreatorObject> creatorObjects;
-		auto creatorObjectsStrings = utils::splitString(splitResponse[1], objects::CreatorObject::DELIMITER_SEARCH);
+		auto creatorObjectsStrings = SPLIT_AND_ASSERT_SIZE1(creatorObjectsStrings, splitResponse[1], objects::CreatorObject);
 		for (const auto& creatorString : creatorObjectsStrings)
 			creatorObjects.emplace_back(objects::CreatorObject::from_vector(utils::splitString(creatorString, objects::CreatorObject::DELIMITER)));
 
 		std::vector<objects::SongObject> songObjects;
-		auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
+		auto songObjectsStrings = SPLIT_AND_ASSERT_SIZE1(songObjectsStrings, splitResponse[2], objects::SongObject);
 		for (auto const& songString : songObjectsStrings)
 			songObjects.emplace_back(objects::SongObject::from_map(utils::splitKVP(songString, objects::SongObject::DELIMITER)));
 
@@ -41,12 +61,12 @@ namespace rtrp
 		auto splitResponse = SPLIT_AND_ASSERT_SIZE1(splitResponse, resp, responses::ListResponse);
 
 		std::vector<objects::ListObject> listObjects;
-		auto listObjectsStrings = utils::splitString(splitResponse[0], objects::ListObject::DELIMITER_SEARCH);
+		auto listObjectsStrings = SPLIT_AND_ASSERT_SIZE1(listObjectsStrings, splitResponse[0], objects::ListObject);
 		for (const auto& listString : listObjectsStrings)
 			listObjects.emplace_back(objects::ListObject::from_map(utils::splitKVP(listString, objects::ListObject::DELIMITER)));
 
 		std::vector<objects::CreatorObject> creatorObjects;
-		auto creatorObjectsStrings = utils::splitString(splitResponse[1], objects::CreatorObject::DELIMITER_SEARCH);
+		auto creatorObjectsStrings = SPLIT_AND_ASSERT_SIZE1(creatorObjectsStrings, splitResponse[1], objects::CreatorObject);
 		for (const auto& creatorString : creatorObjectsStrings)
 			creatorObjects.emplace_back(objects::CreatorObject::from_vector(utils::splitString(creatorString, objects::CreatorObject::DELIMITER)));
 
@@ -61,7 +81,7 @@ namespace rtrp
 		auto splitResponse = SPLIT_AND_ASSERT_SIZE2(splitResponse, resp, responses::UserResponse);
 
 		std::vector<objects::UserObject> userObjects;
-		auto userObjectsStrings = utils::splitString(splitResponse[0], objects::UserObject::DELIMITER_SEARCH);
+		auto userObjectsStrings = SPLIT_AND_ASSERT_SIZE4(userObjectsStrings, splitResponse[0], objects::UserObject);
 		for (const auto& userString : userObjectsStrings)
 			if (userString != "") // idk why but both getGJUserInfo20.php and getGJScores20.php return an empty UserObject in the very end ???
 				userObjects.emplace_back(objects::UserObject::from_map(utils::splitKVP(userString, objects::UserObject::DELIMITER)));
