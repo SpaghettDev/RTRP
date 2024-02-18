@@ -15,7 +15,7 @@ namespace rtrp
 		using v_response_t = std::vector<std::string>;
 
 		template<typename T>
-		struct Result;
+		class Result;
 	}
 
 	namespace utils

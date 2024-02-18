@@ -6,7 +6,7 @@
 namespace rtrp
 {
 	template<typename T>
-	struct impl::Result
+	class impl::Result
 	{
 	private:
 		T m_result;
@@ -21,7 +21,7 @@ namespace rtrp
 			: m_error(isError)
 		{}
 
-		T& unwrap()
+		const T& unwrap() const
 		{
 			if (m_error)
 				throw std::runtime_error("Tried unwrapping an erroneous Result<T>!");

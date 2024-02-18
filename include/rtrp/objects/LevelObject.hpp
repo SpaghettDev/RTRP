@@ -48,7 +48,7 @@ namespace rtrp
 		int copiedEditorTime;
 		std::string settingsString;
 
-		struct HelperFields
+		struct ExtraFields
 		{
 			bool featured;
 			bool epic;
@@ -65,7 +65,7 @@ namespace rtrp
 			};
 			friend class LevelObject;
 
-			static const HelperFields from_map(const impl::kv_response_t& map)
+			static const ExtraFields from_map(const impl::kv_response_t& map)
 			{
 				return {
 					RTRP_VAR_FROM_MAP(19, LevelObject::featureIdx) != 0,
@@ -126,7 +126,7 @@ namespace rtrp
 				RTRP_VAR_FROM_MAP(46, editorTime),
 				RTRP_VAR_FROM_MAP(47, copiedEditorTime),
 				RTRP_VAR_FROM_MAP(48, settingsString),
-				HelperFields::from_map(map)
+				ExtraFields::from_map(map)
 			};
 		}
 	};
