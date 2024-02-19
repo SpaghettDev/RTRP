@@ -19,7 +19,8 @@ namespace rtrp
 	private:
 		inline static constexpr std::string_view DELIMITER = "~|~";
 		inline static constexpr std::string_view DELIMITER_SEARCH = "~:~";
-		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 8;
+		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 9;
+		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 10;
 		friend class RtResponseParser;
 
 		static const SongObject from_map(const impl::kv_response_t& map)
