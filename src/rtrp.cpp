@@ -11,45 +11,45 @@
 #define SPLIT_AND_ASSERT_SIZE_2(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
 		var.size() != type::SPLIT_RESPONSE_SIZE2 \
 		) return {}
 #define SPLIT_AND_ASSERT_SIZE_KVP2(var, resp, type) \
 	utils::splitKVP(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
 		var.size() != type::SPLIT_RESPONSE_SIZE2 \
 		) return {}
 
 #define SPLIT_AND_ASSERT_SIZE_3(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
-		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 && \
 		var.size() != type::SPLIT_RESPONSE_SIZE3 \
 		) return {}
 #define SPLIT_AND_ASSERT_SIZE_KVP3(var, resp, type) \
 	utils::splitKVP(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
-		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 && \
 		var.size() != type::SPLIT_RESPONSE_SIZE3 \
 		) return {}
 
 #define SPLIT_AND_ASSERT_SIZE_4(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
-		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
-		var.size() != type::SPLIT_RESPONSE_SIZE3 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 && \
+		var.size() != type::SPLIT_RESPONSE_SIZE3 && \
 		var.size() != type::SPLIT_RESPONSE_SIZE4 \
 		) return {}
 #define SPLIT_AND_ASSERT_SIZE_KVP4(var, resp, type) \
 	utils::splitKVP(resp, type::DELIMITER); \
 	if ( \
-		var.size() != type::SPLIT_RESPONSE_SIZE || \
-		var.size() != type::SPLIT_RESPONSE_SIZE2 || \
-		var.size() != type::SPLIT_RESPONSE_SIZE3 || \
+		var.size() != type::SPLIT_RESPONSE_SIZE && \
+		var.size() != type::SPLIT_RESPONSE_SIZE2 && \
+		var.size() != type::SPLIT_RESPONSE_SIZE3 && \
 		var.size() != type::SPLIT_RESPONSE_SIZE4 \
 		) return {}
 
@@ -79,7 +79,7 @@ namespace rtrp
 		auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
 		for (auto const& songString : songObjectsStrings)
 		{
-			auto songObject = SPLIT_AND_ASSERT_SIZE_KVP1(songObject, songString, objects::SongObject);
+			auto songObject = SPLIT_AND_ASSERT_SIZE_KVP1(songObject, songString + "~|~", objects::SongObject);
 			songObjects.emplace_back(objects::SongObject::from_map(songObject));
 		}
 
