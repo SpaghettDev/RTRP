@@ -24,7 +24,7 @@ namespace rtrp
 	private:
 		inline static constexpr std::string_view DELIMITER = ":";
 		inline static constexpr std::string_view DELIMITER_SEARCH = "|";
-		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 15;
+		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 14;
 		friend class RtResponseParser;
 
 		static const ListObject from_map(const impl::kv_response_t& map)
