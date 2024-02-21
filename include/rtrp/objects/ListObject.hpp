@@ -12,7 +12,7 @@ namespace rtrp
 		int difficulty;
 		int downloads;
 		int likes;
-		int featuredIdx;
+		int featureIdx;
 		int uploadTimestamp;
 		int editTimestamp;
 		int creatorAccountID;
@@ -37,7 +37,7 @@ namespace rtrp
 				RTRP_VAR_FROM_MAP(7, difficulty),
 				RTRP_VAR_FROM_MAP(10, downloads),
 				RTRP_VAR_FROM_MAP(14, likes),
-				RTRP_VAR_FROM_MAP(19, featuredIdx),
+				RTRP_VAR_FROM_MAP(19, featureIdx),
 				RTRP_VAR_FROM_MAP(28, uploadTimestamp),
 				RTRP_VAR_FROM_MAP(29, editTimestamp),
 				RTRP_VAR_FROM_MAP(49, creatorAccountID),

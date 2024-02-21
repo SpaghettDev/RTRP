@@ -53,10 +53,14 @@
 		var.size() != type::SPLIT_RESPONSE_SIZE4 \
 		) return {}
 
+#define RTRP_TRY_PARSE_BEGIN try {
+#define RTRP_TRY_PARSE_END } catch (...) { return {}; }
+
 namespace rtrp
 {
 	impl::Result<responses::LevelResponse> RtResponseParser::parseLevelResponse(const std::string& resp)
 	{
+		RTRP_TRY_PARSE_BEGIN;
 		auto splitResponse = SPLIT_AND_ASSERT_SIZE_1(splitResponse, resp, responses::LevelResponse);
 
 		std::vector<objects::LevelObject> levelObjects;
@@ -79,8 +83,7 @@ namespace rtrp
 		auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
 		for (auto const& songString : songObjectsStrings)
 		{
-			// ...
-			auto songObject = SPLIT_AND_ASSERT_SIZE_KVP_2(songObject, songString + "~|~", objects::SongObject);
+			auto songObject = SPLIT_AND_ASSERT_SIZE_KVP_2(songObject, songString, objects::SongObject);
 			songObjects.emplace_back(objects::SongObject::from_map(songObject));
 		}
 
@@ -88,10 +91,12 @@ namespace rtrp
 		auto hash = splitResponse[4];
 
 		return { { levelObjects, creatorObjects, songObjects, pageObject, hash } };
+		RTRP_TRY_PARSE_END;
 	}
 
 	impl::Result<responses::ListResponse> RtResponseParser::parseListResponse(const std::string& resp)
 	{
+		RTRP_TRY_PARSE_BEGIN;
 		auto splitResponse = SPLIT_AND_ASSERT_SIZE_1(splitResponse, resp, responses::ListResponse);
 
 		std::vector<objects::ListObject> listObjects;
@@ -114,10 +119,12 @@ namespace rtrp
 		auto hash = splitResponse[3];
 
 		return { { listObjects, creatorObjects, pageObject, hash } };
+		RTRP_TRY_PARSE_END;
 	}
 
 	impl::Result<responses::UserResponse> RtResponseParser::parseUserResponse(const std::string& resp)
 	{
+		RTRP_TRY_PARSE_BEGIN;
 		auto splitResponse = SPLIT_AND_ASSERT_SIZE_2(splitResponse, resp, responses::UserResponse);
 
 		std::vector<objects::UserObject> userObjects;
@@ -135,5 +142,6 @@ namespace rtrp
 			pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[1], objects::PageObject::DELIMITER));
 
 		return { { userObjects, pageObject } };
+		RTRP_TRY_PARSE_END;
 	}
 }

@@ -20,7 +20,7 @@ namespace rtrp
 
 	namespace utils
 	{
-		inline impl::v_response_t splitString(const std::string&, std::string_view);
+		inline impl::v_response_t splitString(const std::string&, const std::string_view);
 		inline impl::kv_response_t splitKVP(const std::string&, const std::string_view);
 
 		template<typename T>

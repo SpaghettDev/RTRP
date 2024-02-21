@@ -6,7 +6,7 @@ namespace rtrp
 {
 	namespace utils
 	{
-		inline impl::v_response_t splitString(const std::string& str, std::string_view delimiter)
+		inline impl::v_response_t splitString(const std::string& str, const std::string_view delimiter)
 		{
 			std::size_t pos_start = 0, pos_end, delim_len = delimiter.length();
 			std::string token;
@@ -26,21 +26,25 @@ namespace rtrp
 		inline impl::kv_response_t splitKVP(const std::string& str, const std::string_view delimiter)
 		{
 			impl::kv_response_t res;
-			std::size_t pos_start = 0, pos_end1, pos_end2, delim_len = delimiter.length();
+			std::size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+			std::string token;
+			std::string key = "";
 
-			while (
-				(pos_end1 = str.find(delimiter, pos_start)) != std::string::npos &&
-				(pos_end2 = str.find(delimiter, pos_end1 + delim_len)) != std::string::npos
-			) {
-				std::string key = str.substr(pos_start, pos_end1 - pos_start);
-				std::string val = str.substr(pos_end1 + delim_len, pos_end2 - pos_end1 - delim_len);
+			while ((pos_end = str.find(delimiter, pos_start)) != std::string::npos)
+			{
+				token = str.substr(pos_start, pos_end - pos_start);
+				pos_start = pos_end + delim_len;
 
-				// TODO: add a check here?
-				res[std::stoi(key)] = val;
-
-				pos_start = pos_end2 + delim_len;
+				if (key.empty())
+					key = token;
+				else
+				{
+					res[std::stoi(key)] = token;
+					key.clear();
+				}
 			}
 
+			res[std::stoi(key)] = str.substr(pos_start);
 			return res;
 		}
 
