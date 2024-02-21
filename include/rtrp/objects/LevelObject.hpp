@@ -80,8 +80,8 @@ namespace rtrp
 	private:
 		static constexpr std::string_view DELIMITER = ":";
 		static constexpr std::string_view DELIMITER_SEARCH = "|";
-		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 26; // getGJLevels21.php
-		static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 32; // downloadGJLevel22.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 27; // getGJLevels21.php
+		static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 33; // downloadGJLevel22.php
 		friend class RtResponseParser;
 
 		static const LevelObject from_map(const impl::kv_response_t& map)
