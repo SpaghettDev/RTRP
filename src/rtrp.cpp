@@ -80,11 +80,14 @@ namespace rtrp
 		}
 
 		std::vector<objects::SongObject> songObjects;
-		auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
-		for (auto const& songString : songObjectsStrings)
+		if (!splitResponse[2].empty())
 		{
-			auto songObject = SPLIT_AND_ASSERT_SIZE_KVP_2(songObject, songString, objects::SongObject);
-			songObjects.emplace_back(objects::SongObject::from_map(songObject));
+			auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
+			for (auto const& songString : songObjectsStrings)
+			{
+				auto songObject = SPLIT_AND_ASSERT_SIZE_KVP_2(songObject, songString, objects::SongObject);
+				songObjects.emplace_back(objects::SongObject::from_map(songObject));
+			}
 		}
 
 		auto pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[3], objects::PageObject::DELIMITER));
@@ -137,8 +140,7 @@ namespace rtrp
 			}
 
 		std::optional<objects::PageObject> pageObject;
-		// if getGJUsers20.php
-		if (splitResponse.size() == 2)
+		if (splitResponse.size() == 2) // if getGJUsers20.php
 			pageObject = objects::PageObject::from_vector(utils::splitString(splitResponse[1], objects::PageObject::DELIMITER));
 
 		return { { userObjects, pageObject } };

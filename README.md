@@ -8,7 +8,7 @@ Currently only parses some endpoints. The functions that do so are:
   - getGJLevelLists.php
 - RtResponseParser::parseLevelResponse
   - getGJLevels21.php
-  - downloadGJLevel22.php
+  - downloadGJLevel22.php (currently broken)
 - RtResponseParser::parseUserInfoResponse
   - getGJUserInfo20.php
   - getGJScores20.php
