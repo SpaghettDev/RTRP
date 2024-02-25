@@ -44,7 +44,9 @@ namespace rtrp
 				}
 			}
 
-			res[std::stoi(key)] = str.substr(pos_start);
+			// false if the count of the delimiter in str is pair
+			if (!key.empty())
+				res[std::stoi(key)] = str.substr(pos_start);
 			return res;
 		}
 
