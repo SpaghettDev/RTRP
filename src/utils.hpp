@@ -55,6 +55,9 @@ namespace rtrp
 			{
 				const auto& itm = map.at(idx);
 
+				if (itm == "")
+					return T{};
+
 				if constexpr (std::is_same_v<T, bool>)
 					return itm == "1";
 				else if constexpr (std::is_same_v<T, int>)
