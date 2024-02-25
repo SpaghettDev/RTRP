@@ -58,7 +58,11 @@ namespace rtrp
 				if constexpr (std::is_same_v<T, bool>)
 					return itm == "1";
 				else if constexpr (std::is_same_v<T, int>)
+				{
+					if (itm.find("-") != std::string::npos)
+						return -std::stoi(itm.substr(1));
 					return std::stoi(itm);
+				}
 				else if constexpr (std::is_same_v<T, float>)
 					return std::stof(itm);
 				else if constexpr (std::is_same_v<T, std::string>)
