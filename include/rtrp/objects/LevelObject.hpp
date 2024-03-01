@@ -13,7 +13,7 @@ namespace rtrp
 		std::string description;
 		std::string levelString;
 		int version;
-		int creatorID;
+		int creatorUserID;
 		int difficultyDenominator;
 		int difficultyNumerator;
 		int downloads;
@@ -92,7 +92,7 @@ namespace rtrp
 				RTRP_VAR_FROM_MAP(3, description),
 				RTRP_VAR_FROM_MAP(4, levelString),
 				RTRP_VAR_FROM_MAP(5, version),
-				RTRP_VAR_FROM_MAP(6, creatorID),
+				RTRP_VAR_FROM_MAP(6, creatorUserID),
 				RTRP_VAR_FROM_MAP(8, difficultyDenominator),
 				RTRP_VAR_FROM_MAP(9, difficultyNumerator),
 				RTRP_VAR_FROM_MAP(10, downloads),

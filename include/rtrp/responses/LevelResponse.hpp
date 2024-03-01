@@ -1,4 +1,6 @@
 #pragma once
+#include <optional>
+
 #include "../fwddec.hpp"
 
 #include "../objects/LevelObject.hpp"
@@ -12,14 +14,14 @@ namespace rtrp
 	{
 		std::vector<objects::LevelObject> levels;
 		std::vector<objects::CreatorObject> creators;
-		std::vector<objects::SongObject> songs;
+		std::optional<std::vector<objects::SongObject>> songs;
 		objects::PageObject page;
 		std::string hash;
 
 		LevelResponse(
 			const std::vector<objects::LevelObject>& levels,
 			const std::vector<objects::CreatorObject>& creators,
-			const std::vector<objects::SongObject>& songs,
+			const std::optional<std::vector<objects::SongObject>>& songs,
 			const objects::PageObject& page,
 			const std::string& hash
 			)

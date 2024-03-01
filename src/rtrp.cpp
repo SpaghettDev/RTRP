@@ -79,14 +79,14 @@ namespace rtrp
 			creatorObjects.emplace_back(objects::CreatorObject::from_vector(creatorObject));
 		}
 
-		std::vector<objects::SongObject> songObjects;
+		std::optional<std::vector<objects::SongObject>> songObjects;
 		if (!splitResponse[2].empty())
 		{
 			auto songObjectsStrings = utils::splitString(splitResponse[2], objects::SongObject::DELIMITER_SEARCH);
 			for (auto const& songString : songObjectsStrings)
 			{
 				auto songObject = SPLIT_AND_ASSERT_SIZE_KVP_2(songObject, songString, objects::SongObject);
-				songObjects.emplace_back(objects::SongObject::from_map(songObject));
+				songObjects->emplace_back(objects::SongObject::from_map(songObject));
 			}
 		}
 
