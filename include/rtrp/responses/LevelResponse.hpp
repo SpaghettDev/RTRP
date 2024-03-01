@@ -31,8 +31,8 @@ namespace rtrp
 		LevelResponse() = default;
 
 	private:
+		friend class RtResponseParser;
 		inline static const std::string_view DELIMITER = "#";
 		static constexpr unsigned int SPLIT_RESPONSE_SIZE = 5;
-		friend class RtResponseParser;
 	};
 }

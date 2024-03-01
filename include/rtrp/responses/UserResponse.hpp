@@ -23,9 +23,9 @@ namespace rtrp
 		UserResponse() = default;
 
 	private:
+		friend class RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = "#";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 1; // getGJUserInfo20.php & getGJScores20.php
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 2; // getGJUsers20.php
-		friend class RtResponseParser;
 	};
 }

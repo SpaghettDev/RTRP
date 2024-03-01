@@ -14,6 +14,6 @@ namespace rtrp
 	public:
 		static impl::Result<responses::LevelResponse> parseLevelResponse(const std::string&);
 		static impl::Result<responses::ListResponse> parseListResponse(const std::string&);
-		inline impl::Result<responses::UserResponse> parseUserResponse(const std::string&);
+		static impl::Result<responses::UserResponse> parseUserResponse(const std::string&);
 	};
 }
