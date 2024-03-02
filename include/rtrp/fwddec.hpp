@@ -20,11 +20,11 @@ namespace rtrp
 
 	namespace utils
 	{
-		impl::v_response_t splitString(const std::string&, const std::string_view);
-		impl::kv_response_t splitKVP(const std::string&, const std::string_view);
+		inline impl::v_response_t splitString(const std::string&, const std::string_view);
+		inline impl::kv_response_t splitKVP(const std::string&, const std::string_view);
 
 		template<typename T>
-		T getOrDefault(const impl::kv_response_t&, std::size_t);
+		inline T getOrDefault(const impl::kv_response_t&, std::size_t);
 	}
 
 	namespace objects
@@ -46,3 +46,5 @@ namespace rtrp
 
 	class RtResponseParser;
 }
+
+#include "../src/utils.hpp"
