@@ -47,4 +47,4 @@ namespace rtrp
 	class RtResponseParser;
 }
 
-#include "utils.hpp"
+#include "rtrp_utils.hpp"
