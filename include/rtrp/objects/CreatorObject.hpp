@@ -10,10 +10,10 @@ namespace rtrp
 		int accountID;
 
 	private:
+		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = ":";
 		inline static constexpr std::string_view DELIMITER_SEARCH = "|";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 3;
-		friend class RtResponseParser;
 
 		static const CreatorObject from_vector(const impl::v_response_t& vec)
 		{

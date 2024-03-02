@@ -26,7 +26,7 @@ namespace rtrp
 		ListResponse() = default;
 
 	private:
-		friend class RtResponseParser;
+		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = "#";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 4;
 	};
