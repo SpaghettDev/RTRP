@@ -1,5 +1,4 @@
 #include "rtrp/rtrp.hpp"
-#include "utils.hpp"
 
 #define SPLIT_AND_ASSERT_SIZE_1(var, resp, type) \
 	utils::splitString(resp, type::DELIMITER); \

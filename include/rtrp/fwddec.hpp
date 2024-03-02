@@ -4,8 +4,8 @@
 #include <vector>
 #include <map>
 
-#define RTRP_VAR_FROM_MAP(idx, member) utils::getOrDefault<decltype(member)>(map, idx)
-#define RTRP_VEC_VAR_FROM_MAP(idx, member, delimiter) utils::splitString(utils::getOrDefault<std::string>(map, idx), delimiter)
+#define RTRP_VAR_FROM_MAP(idx, member) ::rtrp::utils::getOrDefault<decltype(member)>(map, idx)
+#define RTRP_VEC_VAR_FROM_MAP(idx, member, delimiter) ::rtrp::utils::splitString(utils::getOrDefault<std::string>(map, idx), delimiter)
 
 namespace rtrp
 {
@@ -20,11 +20,11 @@ namespace rtrp
 
 	namespace utils
 	{
-		inline impl::v_response_t splitString(const std::string&, const std::string_view);
-		inline impl::kv_response_t splitKVP(const std::string&, const std::string_view);
+		impl::v_response_t splitString(const std::string&, const std::string_view);
+		impl::kv_response_t splitKVP(const std::string&, const std::string_view);
 
 		template<typename T>
-		inline T getOrDefault(const impl::kv_response_t&, std::size_t);
+		T getOrDefault(const impl::kv_response_t&, std::size_t);
 	}
 
 	namespace objects

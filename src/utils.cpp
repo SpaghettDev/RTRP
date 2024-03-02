@@ -1,6 +1,4 @@
-#include <string>
-#include <vector>
-#include <map>
+#include "rtrp/fwddec.hpp"
 
 namespace rtrp
 {
