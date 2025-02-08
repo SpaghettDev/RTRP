@@ -58,7 +58,7 @@ namespace rtrp
 		template <typename T>
 		inline result::Result<T> get(const v_response_t& vec, std::size_t idx)
 		{
-			if (vec.size() < idx)
+			if (vec.size() > idx)
 			{
 				const auto& itm = vec.at(idx);
 

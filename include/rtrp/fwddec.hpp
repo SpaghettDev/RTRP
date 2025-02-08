@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include <result/result.hpp>
+#include <ltresult/result.hpp>
 
 #if !defined(RTRP_CONCAT)
     #define RTRP_CONCAT2(x, y) x##y

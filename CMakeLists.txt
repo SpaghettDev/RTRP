@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(RTRP LANGUAGES CXX VERSION 5.0.0)
+project(RTRP LANGUAGES CXX VERSION 5.0.1)
 
 file(GLOB SOURCES
     src/*.cpp
@@ -28,7 +28,7 @@ target_include_directories(${PROJECT_NAME}
 
 include(cmake/git.cmake)
 message("Getting modules\n")
-include(cmake/result.cmake)
+include(cmake/ltresult.cmake)
 
 if (PROJECT_IS_TOP_LEVEL)
     if (NOT CMAKE_GENERATOR MATCHES "Visual Studio")

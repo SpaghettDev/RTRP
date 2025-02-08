@@ -1,7 +1,7 @@
 #pragma once
 #include "fwddec.hpp"
 
-#include <result/result.hpp>
+#include <ltresult/result.hpp>
 
 #include "responses/LevelResponse.hpp"
 #include "responses/ListResponse.hpp"
