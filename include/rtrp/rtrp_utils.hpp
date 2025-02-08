@@ -1,55 +1,41 @@
+#pragma once
 #include "rtrp/fwddec.hpp"
+
+#include <type_traits>
+#include <cstdlib>
 
 namespace rtrp
 {
 	namespace utils
 	{
-		inline impl::v_response_t splitString(const std::string& str, const std::string_view delimiter)
+		template <typename T>
+		inline result::Result<T> numFromString(const char* str, int base = 10) requires(std::is_arithmetic_v<T> || std::is_enum_v<T>)
 		{
-			std::size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-			std::string token;
-			impl::v_response_t res;
+			errno = 0;
+			static char* p_end = nullptr;
 
-			while ((pos_end = str.find(delimiter, pos_start)) != std::string::npos)
+			T res;
+
+			if constexpr (std::is_same_v<T, int> || std::is_enum_v<T>)
+				res = static_cast<T>(std::strtol(str, &p_end, base));
+			else if constexpr (std::is_same_v<T, float>)
+				res = std::strtof(str, &p_end);
+			else if constexpr (std::is_same_v<T, double>)
+				res = std::strtof(str, &p_end);
+			else
+				static_assert(!sizeof(T*), "Invalid type passed to numFromString!");
+
+			if (*p_end != 0)
 			{
-				token = str.substr(pos_start, pos_end - pos_start);
-				pos_start = pos_end + delim_len;
-				res.push_back(token);
+				p_end = nullptr;
+				return result::Err("Couldn't convert string to number");
 			}
 
-			res.push_back(str.substr(pos_start));
 			return res;
 		}
 
-		inline impl::kv_response_t splitKVP(const std::string& str, const std::string_view delimiter)
-		{
-			impl::kv_response_t res;
-			std::size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-			std::string token;
-			std::string key = "";
-
-			while ((pos_end = str.find(delimiter, pos_start)) != std::string::npos)
-			{
-				token = str.substr(pos_start, pos_end - pos_start);
-				pos_start = pos_end + delim_len;
-
-				if (key.empty())
-					key = token;
-				else
-				{
-					res[std::stoi(key)] = token;
-					key.clear();
-				}
-			}
-
-			// false if the count of the delimiter in str is pair
-			if (!key.empty())
-				res[std::stoi(key)] = str.substr(pos_start);
-			return res;
-		}
-
-		template<typename T>
-		inline T getOrDefault(const impl::kv_response_t& map, std::size_t idx)
+		template <typename T>
+		inline result::Result<T> get(const kv_response_t& map, std::size_t idx)
 		{
 			if (map.find(idx) != map.end())
 			{
@@ -58,20 +44,33 @@ namespace rtrp
 				if (itm == "")
 					return T{};
 
-				if constexpr (std::is_same_v<T, bool>)
-					return itm == "1";
-				else if constexpr (std::is_same_v<T, int>)
-				{
-					if (itm.find("-") != std::string::npos)
-						return -std::stoi(itm.substr(1));
-					return std::stoi(itm);
-				}
-				else if constexpr (std::is_same_v<T, float>)
-					return std::stof(itm);
-				else if constexpr (std::is_same_v<T, std::string>)
+				if constexpr (std::is_same_v<T, std::string>)
 					return itm;
-				else if constexpr (std::is_enum_v<T>)
-					return static_cast<T>(std::stoi(itm));
+				else if constexpr (std::is_same_v<T, bool>)
+					return itm == "1";
+				else
+					return numFromString<T>(itm.c_str());
+			}
+
+			return T{};
+		}
+
+		template <typename T>
+		inline result::Result<T> get(const v_response_t& vec, std::size_t idx)
+		{
+			if (vec.size() < idx)
+			{
+				const auto& itm = vec.at(idx);
+
+				if (itm == "")
+					return T{};
+
+				if constexpr (std::is_same_v<T, std::string>)
+					return itm;
+				else if constexpr (std::is_same_v<T, bool>)
+					return itm == "1";
+				else
+					return numFromString<T>(itm.c_str());
 			}
 
 			return T{};

@@ -23,19 +23,30 @@ namespace rtrp
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 9;
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE2 = 10;
 
-		static const SongObject from_map(const impl::kv_response_t& map)
+		static result::Result<SongObject> from_map(kv_response_t&& map)
 		{
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto ID, 1, ID);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto name, 2, name);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto artistID, 3, artistID);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto artistName, 4, artistName);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto size, 5, size);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto videoID, 6, videoID);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto youtubeChannelID, 7, youtubeChannelID);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto isVerified, 8, isVerified);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto songPriority, 9, songPriority);
+			RTRP_VAR_FROM_MAP_SAFE_INTO(auto link, 10, link);
+
 			return {
-				RTRP_VAR_FROM_MAP(1, ID),
-				RTRP_VAR_FROM_MAP(2, name),
-				RTRP_VAR_FROM_MAP(3, artistID),
-				RTRP_VAR_FROM_MAP(4, artistName),
-				RTRP_VAR_FROM_MAP(5, size),
-				RTRP_VAR_FROM_MAP(6, videoID),
-				RTRP_VAR_FROM_MAP(7, youtubeChannelID),
-				RTRP_VAR_FROM_MAP(8, isVerified),
-				RTRP_VAR_FROM_MAP(9, songPriority),
-				RTRP_VAR_FROM_MAP(10, link)
+				ID,
+				name,
+				artistID,
+				artistName,
+				size,
+				videoID,
+				youtubeChannelID,
+				isVerified,
+				songPriority,
+				link
 			};
 		}
 	};

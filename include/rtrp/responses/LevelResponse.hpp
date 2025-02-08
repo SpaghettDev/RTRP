@@ -1,6 +1,4 @@
 #pragma once
-#include <optional>
-
 #include "../fwddec.hpp"
 
 #include "../objects/LevelObject.hpp"
@@ -14,18 +12,20 @@ namespace rtrp
 	{
 		std::vector<objects::LevelObject> levels;
 		std::vector<objects::CreatorObject> creators;
-		std::optional<std::vector<objects::SongObject>> songs;
+		std::vector<objects::SongObject> songs; // optional
 		objects::PageObject page;
 		std::string hash;
 
 		LevelResponse(
-			const std::vector<objects::LevelObject>& levels,
-			const std::vector<objects::CreatorObject>& creators,
-			const std::optional<std::vector<objects::SongObject>>& songs,
-			const objects::PageObject& page,
-			const std::string& hash
-			)
-			: levels(levels), creators(creators), songs(songs), page(page), hash(hash)
+			std::vector<objects::LevelObject>&& levels,
+			std::vector<objects::CreatorObject>&& creators,
+			std::vector<objects::SongObject>&& songs,
+			objects::PageObject&& page,
+			std::string&& hash
+		)
+			: levels(std::move(levels)), creators(std::move(creators)),
+				songs(std::move(songs)), page(std::move(page)),
+				hash(std::move(hash))
 		{}
 
 		LevelResponse() = default;

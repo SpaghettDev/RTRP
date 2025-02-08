@@ -14,9 +14,13 @@ namespace rtrp
 		inline static constexpr std::string_view DELIMITER = ":";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 3;
 
-		static const PageObject from_vector(const impl::v_response_t& vec)
+		static result::Result<PageObject> from_vector(v_response_t&& vec)
 		{
-			return { std::stoi(vec[0]), std::stoi(vec[1]), std::stoi(vec[2]) };
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto pages, 0, pages);
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto currentPage, 1, currentPage);
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto countPerPage, 2, countPerPage);
+
+			return { pages, currentPage, countPerPage };
 		}
 	};
 }

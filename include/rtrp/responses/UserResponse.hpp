@@ -4,6 +4,7 @@
 #include "../fwddec.hpp"
 
 #include "../objects/UserObject.hpp"
+#include "../objects/PageObject.hpp"
 
 namespace rtrp
 {
@@ -12,12 +13,15 @@ namespace rtrp
 		std::vector<objects::UserObject> users;
 		std::optional<objects::PageObject> page;
 
-		UserResponse(const std::vector<objects::UserObject>& users)
-			: users(users), page(std::nullopt)
+		UserResponse(std::vector<objects::UserObject>&& users)
+			: users(std::move(users)), page(std::nullopt)
 		{}
 
-		UserResponse(const std::vector<objects::UserObject>& users, const std::optional<objects::PageObject>& page)
-			: users(users), page(page)
+		UserResponse(
+			std::vector<objects::UserObject>&& users,
+			std::optional<objects::PageObject>&& page
+		)
+			: users(std::move(users)), page(std::move(page))
 		{}
 
 		UserResponse() = default;

@@ -15,12 +15,13 @@ namespace rtrp
 		std::string hash;
 
 		ListResponse(
-			const std::vector<objects::ListObject>& lists,
-			const std::vector<objects::CreatorObject>& creators,
-			const objects::PageObject& page,
-			const std::string& hash
-			)
-			: lists(lists), creators(creators), page(page), hash(hash)
+			std::vector<objects::ListObject>&& lists,
+			std::vector<objects::CreatorObject>&& creators,
+			objects::PageObject&& page,
+			std::string&& hash
+		)
+			: lists(std::move(lists)), creators(std::move(creators)),
+				page(std::move(page)), hash(std::move(hash))
 		{}
 
 		ListResponse() = default;

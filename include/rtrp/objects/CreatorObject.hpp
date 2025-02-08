@@ -15,9 +15,13 @@ namespace rtrp
 		inline static constexpr std::string_view DELIMITER_SEARCH = "|";
 		inline static constexpr unsigned int SPLIT_RESPONSE_SIZE = 3;
 
-		static const CreatorObject from_vector(const impl::v_response_t& vec)
+		static result::Result<CreatorObject> from_vector(v_response_t&& vec)
 		{
-			return { std::stoi(vec[0]), vec[1], std::stoi(vec[2]) };
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto userID, 0, userID);
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto name, 1, name);
+			RTRP_VAR_FROM_VEC_SAFE_INTO(auto accountID, 2, accountID);
+
+			return { userID, name, accountID };
 		}
 	};
 }
