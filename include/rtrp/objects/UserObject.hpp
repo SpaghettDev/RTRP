@@ -88,7 +88,9 @@ namespace rtrp
 		std::vector<std::string> unk55;
 
 #ifdef __APPLE__
-		UserObject(std::string&& userName, int userID, int stars, int demons, int ranking,
+		UserObject() = default;
+		UserObject(
+			std::string&& userName, int userID, int stars, int demons, int ranking,
 			int accountHighlight, int creatorPoints, int iconID, int playerColor,
 			int playerColor2, int secretCoins, int iconType, int special, int accountID,
 			int userCoins, MessageState messageState, FriendsState friendsState,
@@ -104,7 +106,8 @@ namespace rtrp
 			CommentHistoryState commentHistoryState,
 			int unk51, int moons,
 			int unk53, int unk54,
-			std::vector<std::string>&& unk55)
+			std::vector<std::string>&& unk55
+		)
 			: userName(std::move(userName)), userID(userID), stars(stars), demons(demons),
 			  ranking(ranking), accountHighlight(accountHighlight), creatorPoints(creatorPoints),
 			  iconID(iconID), playerColor(playerColor), playerColor2(playerColor2),

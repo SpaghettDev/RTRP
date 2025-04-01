@@ -17,9 +17,12 @@ namespace rtrp
 		std::string link; // URI encoded
 
 #ifdef __APPLE__
-		SongObject(int ID, std::string&& name, int artistID, std::string&& artistName, float size,
+		SongObject() = default;
+		SongObject(
+			int ID, std::string&& name, int artistID, std::string&& artistName, float size,
 			std::string&& videoID, std::string&& youtubeChannelID, bool isVerified, int songPriority,
-			std::string&& link)
+			std::string&& link
+		)
 			: ID(ID), name(std::move(name)), artistID(artistID), artistName(std::move(artistName)),
 			  size(size), videoID(std::move(videoID)), youtubeChannelID(std::move(youtubeChannelID)),
 			  isVerified(isVerified), songPriority(songPriority), link(std::move(link))

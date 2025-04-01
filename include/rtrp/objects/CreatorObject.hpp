@@ -10,6 +10,7 @@ namespace rtrp
 		int accountID;
 
 #ifdef __APPLE__
+		CreaCreatorObject() = default;
 		CreatorObject(int userID, std::string&& name, int accountID)
 			: userID(userID), name(std::move(name)), accountID(accountID)
 		{}

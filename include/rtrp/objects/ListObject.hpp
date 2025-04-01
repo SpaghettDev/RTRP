@@ -22,6 +22,7 @@ namespace rtrp
 		int firstDiamondsGoal;
 
 #ifdef __APPLE__
+		ListObject() = default;
 		ListObject(int listID, std::string&& name, std::string&& description, int version, int difficulty,
 			int downloads, int likes, int featureIdx, int uploadTimestamp, int editTimestamp,
 			int creatorAccountID, std::string&& creatorName, std::vector<std::string>&& levelIDs,

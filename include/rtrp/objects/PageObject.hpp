@@ -10,6 +10,7 @@ namespace rtrp
 		int countPerPage;
 
 #ifdef __APPLE__
+		PageObject() = default;
 		PageObject(int pages, int currentPage, int countPerPage)
 			: pages(pages), currentPage(currentPage), countPerPage(countPerPage)
 		{}
