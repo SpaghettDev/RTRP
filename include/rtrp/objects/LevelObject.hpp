@@ -79,7 +79,7 @@ namespace rtrp
 		} extras;
 
 #ifdef __APPLE__
-		LevelOLevelObject() = default;
+		LevelObject() = default;
 		LevelObject(
 			int levelID, std::string&& name, std::string&& description, std::string&& levelString, int version,
 			int creatorUserID, int difficultyDenominator, int difficultyNumerator, int downloads, int setCompletes,
