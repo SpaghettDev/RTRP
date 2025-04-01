@@ -67,7 +67,7 @@ namespace rtrp
 
 			static ExtraFields from_map(const kv_response_t& map)
 			{
-				// at this point its safe to unwrap since everything was checked before reaching this
+				// at this point its safe to unwrap since everything was checked before reaching here
 				return {
 					RTRP_VAR_FROM_MAP(19, LevelObject::featureIdx).unwrap() != 0,
 					RTRP_VAR_FROM_MAP(42, LevelObject::epic).unwrap() != 0,
@@ -77,6 +77,33 @@ namespace rtrp
 				};
 			}
 		} extras;
+
+#ifdef __APPLE__
+		LevelObject(
+			int levelID, std::string&& name, std::string&& description, std::string&& levelString, int version,
+			int creatorUserID, int difficultyDenominator, int difficultyNumerator, int downloads, int setCompletes,
+			int officialSong, int gameVersion, int likes, int length, int dislikes, bool isDemon, int stars,
+			int featureIdx, bool isAuto, std::string&& recordString, std::string&& password, std::string&& uploadDate,
+			std::string&& updateDate, int copiedID, bool twoPlayer, int customSongID, std::string&& extraString,
+			int coins, bool verifiedCoins, int starsRequested, bool lowDetailMode, int dailyNumber,
+			int epic, int demonDifficulty, bool isGauntlet, int objects,
+			int editorTime, int copiedEditorTime, std::string&& settingsString,
+			ExtraFields&& extras
+		)
+			: levelID(levelID), name(std::move(name)), description(std::move(description)), levelString(std::move(levelString)),
+				version(version), creatorUserID(creatorUserID), difficultyDenominator(difficultyDenominator),
+				difficultyNumerator(difficultyNumerator), downloads(downloads), setCompletes(setCompletes),
+				officialSong(officialSong), gameVersion(gameVersion), likes(likes), length(length), dislikes(dislikes),
+				isDemon(isDemon), stars(stars), featureIdx(featureIdx), isAuto(isAuto), recordString(std::move(recordString)),
+				password(std::move(password)), uploadDate(std::move(uploadDate)), updateDate(std::move(updateDate)),
+				copiedID(copiedID), twoPlayer(twoPlayer), customSongID(customSongID), extraString(std::move(extraString)),
+				coins(coins), verifiedCoins(verifiedCoins), starsRequested(starsRequested),
+				lowDetailMode(lowDetailMode), dailyNumber(dailyNumber), epic(epic),
+				demonDifficulty(demonDifficulty), isGauntlet(isGauntlet), objects(objects),
+				editorTime(editorTime), copiedEditorTime(copiedEditorTime),
+				settingsString(std::move(settingsString)), extras(std::move(extras))
+		{}
+#endif
 
 	private:
 		friend class ::rtrp::RtResponseParser;
@@ -129,9 +156,9 @@ namespace rtrp
 
 			return {
 				levelID,
-				name,
-				description,
-				levelString,
+				std::move(name),
+				std::move(description),
+				std::move(levelString),
 				version,
 				creatorUserID,
 				difficultyDenominator,
@@ -147,14 +174,14 @@ namespace rtrp
 				stars,
 				featureIdx,
 				isAuto,
-				recordString,
-				password,
-				uploadDate,
-				updateDate,
+				std::move(recordString),
+				std::move(password),
+				std::move(uploadDate),
+				std::move(updateDate),
 				copiedID,
 				twoPlayer,
 				customSongID,
-				extraString,
+				std::move(extraString),
 				coins,
 				verifiedCoins,
 				starsRequested,
@@ -166,7 +193,7 @@ namespace rtrp
 				objects,
 				editorTime,
 				copiedEditorTime,
-				settingsString,
+				std::move(settingsString),
 				ExtraFields::from_map(map)
 			};
 		}

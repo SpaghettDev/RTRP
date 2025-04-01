@@ -9,6 +9,12 @@ namespace rtrp
 		int currentPage;
 		int countPerPage;
 
+#ifdef __APPLE__
+		PageObject(int pages, int currentPage, int countPerPage)
+			: pages(pages), currentPage(currentPage), countPerPage(countPerPage)
+		{}
+#endif
+
 	private:
 		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = ":";

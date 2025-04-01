@@ -21,6 +21,19 @@ namespace rtrp
 		int diamonds;
 		int firstDiamondsGoal;
 
+#ifdef __APPLE__
+		ListObject(int listID, std::string&& name, std::string&& description, int version, int difficulty,
+			int downloads, int likes, int featureIdx, int uploadTimestamp, int editTimestamp,
+			int creatorAccountID, std::string&& creatorName, std::vector<std::string>&& levelIDs,
+			int diamonds, int firstDiamondsGoal)
+			: listID(listID), name(std::move(name)), description(std::move(description)), version(version),
+			  difficulty(difficulty), downloads(downloads), likes(likes), featureIdx(featureIdx),
+			  uploadTimestamp(uploadTimestamp), editTimestamp(editTimestamp),
+			  creatorAccountID(creatorAccountID), creatorName(std::move(creatorName)),
+			  levelIDs(std::move(levelIDs)), diamonds(diamonds), firstDiamondsGoal(firstDiamondsGoal)
+		{}
+#endif
+
 	private:
 		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = ":";
@@ -47,8 +60,8 @@ namespace rtrp
 
 			return {
 				listID,
-				name,
-				description,
+				std::move(name),
+				std::move(description),
 				version,
 				difficulty,
 				downloads,
@@ -57,8 +70,8 @@ namespace rtrp
 				uploadTimestamp,
 				editTimestamp,
 				creatorAccountID,
-				creatorName,
-				levelIDs,
+				std::move(creatorName),
+				std::move(levelIDs),
 				diamonds,
 				firstDiamondsGoal
 			};

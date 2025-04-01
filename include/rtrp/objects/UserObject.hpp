@@ -87,6 +87,46 @@ namespace rtrp
 		int unk54;
 		std::vector<std::string> unk55;
 
+#ifdef __APPLE__
+		UserObject(std::string&& userName, int userID, int stars, int demons, int ranking,
+			int accountHighlight, int creatorPoints, int iconID, int playerColor,
+			int playerColor2, int secretCoins, int iconType, int special, int accountID,
+			int userCoins, MessageState messageState, FriendsState friendsState,
+			std::string&& youTube, int accIcon, int accShip, int accBall,
+			int accBird, int accDart, int accRobot, int accStreak,
+			int accGlow, int isRegistered, int globalRank,
+			FriendState friendState, int messages,
+			int friendRequests, int newFriends,
+			bool newFriendRequest, std::string&& age,
+			int accSpider, std::string&& twitter,
+			std::string&& twitch, int diamonds,
+			int accExplosion, ModLevel modLevel,
+			CommentHistoryState commentHistoryState,
+			int unk51, int moons,
+			int unk53, int unk54,
+			std::vector<std::string>&& unk55)
+			: userName(std::move(userName)), userID(userID), stars(stars), demons(demons),
+			  ranking(ranking), accountHighlight(accountHighlight), creatorPoints(creatorPoints),
+			  iconID(iconID), playerColor(playerColor), playerColor2(playerColor2),
+			  secretCoins(secretCoins), iconType(iconType), special(special),
+			  accountID(accountID), userCoins(userCoins), messageState(messageState),
+			  friendsState(friendsState), youTube(std::move(youTube)), accIcon(accIcon),
+			  accShip(accShip), accBall(accBall), accBird(accBird), accDart(accDart),
+			  accRobot(accRobot), accStreak(accStreak), accGlow(accGlow),
+			  isRegistered(isRegistered), globalRank(globalRank),
+			  friendState(friendState), messages(messages),
+			  friendRequests(friendRequests), newFriends(newFriends),
+			  newFriendRequest(newFriendRequest), age(std::move(age)),
+			  accSpider(accSpider), twitter(std::move(twitter)),
+			  twitch(std::move(twitch)), diamonds(diamonds),
+			  accExplosion(accExplosion), modLevel(modLevel),
+			  commentHistoryState(commentHistoryState),
+			  unk51(unk51), moons(moons),
+			  unk53(unk53), unk54(unk54),
+			  unk55(std::move(unk55))
+		{}
+#endif
+
 	private:
 		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = ":";
@@ -146,7 +186,7 @@ namespace rtrp
 			RTRP_VEC_VAR_FROM_MAP_SAFE_INTO(auto unk55, 55, unk55, ",");
 
 			return {
-				userName,
+				std::move(userName),
 				userID,
 				stars,
 				demons,
@@ -163,7 +203,7 @@ namespace rtrp
 				userCoins,
 				messageState,
 				friendsState,
-				youTube,
+				std::move(youTube),
 				accIcon,
 				accShip,
 				accBall,
@@ -179,10 +219,10 @@ namespace rtrp
 				friendRequests,
 				newFriends,
 				newFriendRequest,
-				age,
+				std::move(age),
 				accSpider,
-				twitter,
-				twitch,
+				std::move(twitter),
+				std::move(twitch),
 				diamonds,
 				accExplosion,
 				modLevel,
@@ -191,7 +231,7 @@ namespace rtrp
 				moons,
 				unk53,
 				unk54,
-				unk55
+				std::move(unk55)
 			};
 		}
 	};

@@ -9,6 +9,12 @@ namespace rtrp
 		std::string name;
 		int accountID;
 
+#ifdef __APPLE__
+		CreatorObject(int userID, std::string&& name, int accountID)
+			: userID(userID), name(std::move(name)), accountID(accountID)
+		{}
+#endif
+
 	private:
 		friend class ::rtrp::RtResponseParser;
 		inline static constexpr std::string_view DELIMITER = ":";
@@ -21,7 +27,7 @@ namespace rtrp
 			RTRP_VAR_FROM_VEC_SAFE_INTO(auto name, 1, name);
 			RTRP_VAR_FROM_VEC_SAFE_INTO(auto accountID, 2, accountID);
 
-			return { userID, name, accountID };
+			return { userID, std::move(name), accountID };
 		}
 	};
 }
