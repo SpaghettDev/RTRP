@@ -3,7 +3,7 @@ include(FetchContent)
 FetchContent_Declare(
     LTResult
     GIT_REPOSITORY https://github.com/SpaghettDev/result.git
-    GIT_TAG        5405507e568b143ed96367fa41b7bc72c78b5fef
+    GIT_TAG        fa5c01de77837fa068d1d85214cd0aa6e929eb0c
     GIT_PROGRESS TRUE
 )
 message("Fetching LTResult")
